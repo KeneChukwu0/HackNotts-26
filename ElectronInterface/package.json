@@ -1,0 +1,16 @@
+{
+  "name": "electroninterface",
+  "version": "1.0.0",
+  "description": "reels",
+  "license": "ISC",
+  "author": "James Harmer",
+  "type": "commonjs",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "test"
+  },
+  "devDependencies": {
+    "electron": "^45.0.0"
+  }
+}
