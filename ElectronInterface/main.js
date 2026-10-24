@@ -1,7 +1,11 @@
 const { app, BrowserWindow } = require('electron')
 const { spawn } = require("node:child_process");
 const path = require("node:path");
+const { contextBridge, ipcRenderer } = require("electron");
 
+contextBridge.exposeInMainWorld("pythonAPI", {
+  run: () => ipcRenderer.invoke("run-python")
+});
 
 const createWindow = () => {
   const win = new BrowserWindow({
@@ -12,8 +16,7 @@ const createWindow = () => {
   win.loadURL('https://www.instagram.com/reels')
 }
 
-app.whenReady().then(() => {
-  createWindow()
+
 })
 
 Scroll.handle("run-python", async ()) => {
@@ -43,9 +46,28 @@ Scroll.handle("run-python", async ()) => {
 
         try {
             resolve(JSON.parse(stdout));
+            if(stdout == True)
+            {
+                nextReel();
+            }
         } catch (error) {
             reject(new Error(`Invalid JSON from Python: ${stdout}`));
         }
         });
   });
 });
+
+function nextReel()
+{
+    if (!win || win.isDestroyed()) return;
+
+    win.focus();
+
+    win.webContents.sendInputEvent({
+        type: 'keyDown',
+        keyCode: 'DOWN'
+    });
+}
+
+app.whenReady().then(() => {
+  createWindow()
