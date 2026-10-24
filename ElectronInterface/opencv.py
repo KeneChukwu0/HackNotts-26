@@ -1,4 +1,5 @@
 import cv2
+import json
 
 # Initialize webcam
 cap = cv2.VideoCapture(0)
@@ -28,16 +29,23 @@ while True:
             eye_gray = roi_gray[ey:ey + eh, ex:ex + ew]
             eye_color = roi_color[ey:ey + eh, ex:ex + ew]
 
-            # Thresholding to isolate the pupil
             _, thresh = cv2.threshold(eye_gray, 70, 255, cv2.THRESH_BINARY_INV)
 
-            # Find contours
             contours, _ = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
             contours = sorted(contours, key=lambda x: cv2.contourArea(x), reverse=True)
 
             if contours:
                 (cx, cy), radius = cv2.minEnclosingCircle(contours[0])
                 cv2.circle(eye_color, (int(cx), int(cy)), int(radius), (255, 0, 0), 2)
+                result = {
+                    "result": "False"
+                }
+                print(json.dumps(result))
+            else:
+                result = {
+                    "result" : "True"
+                }
+                print(json.dumps(result))
 
     cv2.imshow('Pupil Detection', frame)
 
