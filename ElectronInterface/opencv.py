@@ -41,7 +41,7 @@ while True:
                     f.write("False")
             else:
                 with open("blink.txt", "w") as f:
-                    f.write("False")
+                    f.write("True")
 
     cv2.imshow('Pupil Detection', frame)
 
