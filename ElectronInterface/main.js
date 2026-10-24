@@ -1,3 +1,11 @@
+function nextreel() {
+browserWindow.webContents.sendInputEvent({keyCode: "Down", type: "keyDown"});
+browserWindow.webContents.sendInputEvent({keyCode: "Down", type: "char"});
+browserWindow.webContents.sendInputEvent({keyCode: "Down", type: "keyUp"});
+
+}
+
+
 const { app, BrowserWindow } = require('electron')
 
 

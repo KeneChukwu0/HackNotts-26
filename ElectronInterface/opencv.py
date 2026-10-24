@@ -37,15 +37,11 @@ while True:
             if contours:
                 (cx, cy), radius = cv2.minEnclosingCircle(contours[0])
                 cv2.circle(eye_color, (int(cx), int(cy)), int(radius), (255, 0, 0), 2)
-                result = {
-                    "result": "False"
-                }
-                print(json.dumps(result))
+                with open("blink.txt", "w") as f:
+                    f.write("False")
             else:
-                result = {
-                    "result" : "True"
-                }
-                print(json.dumps(result))
+                with open("blink.txt", "w") as f:
+                    f.write("False")
 
     cv2.imshow('Pupil Detection', frame)
 
