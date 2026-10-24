@@ -63,10 +63,10 @@ function nextReel()
 
     win.focus();
 
-    win.webContents.sendInputEvent({
+    win.webContents.sendInputEvent(
         type: 'keyDown',
         keyCode: 'DOWN'
-    });
+    );
 }
 
 app.whenReady().then(() => {
