@@ -94,31 +94,3 @@ app.on('before-quit', () => {
   stopped = true;
   if (pyProc) pyProc.kill();
 });
-app.whenReady().then(() => {
-  createWindow()
-  readfile()
-})
-
-
-
-
-
-
-
-
-
-function readfile(){
-while (true){
-    fs.readFile("blink.txt",{ encoding: utf8 },function (err,data) {
-    if (err) return
-    if (data == "True"){
-        console.log("True")
-        nextreel();
-    }
-    else{
-        console.log("False")
-    }
-
-    });
-    }
-}

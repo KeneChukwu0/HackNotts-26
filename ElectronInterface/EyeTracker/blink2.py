@@ -9,8 +9,8 @@ from scipy.spatial import distance as dist
 from imutils import face_utils
 
 # from imutils import
-
-
+def blink_detect():
+    return blink_detected
 # defining a function to calculate the EAR
 def calculate_EAR(eye):
 
@@ -26,6 +26,7 @@ def calculate_EAR(eye):
     return EAR
 def blink():
     # Variables
+    global blink_detected
     blink_thresh = 0.45
     succ_frame = 2
     count_frame = 0
@@ -79,6 +80,7 @@ def blink():
                     if count_frame >= succ_frame:
                         cv2.putText(frame, 'Blink Detected', (30, 30),
                                     cv2.FONT_HERSHEY_DUPLEX, 1, (0, 200, 0), 1)
+                        blink_detected=True
                     else:
                         count_frame = 0
 
