@@ -2,14 +2,25 @@
 import cv2
 import dlib
 import imutils
-
+import threading
 from scipy.spatial import distance as dist
 
 from imutils import face_utils
-
+blink_lock=threading.Lock()
+blink_detected=False
 
 def blink_detect():
-    return blink_detected
+    with blink_lock:
+        return blink_detected
+
+def consume_blink():
+
+    global blink_detected
+
+    with blink_lock:
+        result = blink_detected
+        blink_detected = False
+        return result
 
 def calculate_EAR(eye):
 
@@ -19,6 +30,7 @@ def calculate_EAR(eye):
 
 
     x1 = dist.euclidean(eye[0], eye[3])
+
 
 
     EAR = (y1+y2) / x1
@@ -75,7 +87,8 @@ def blink():
                     if count_frame >= succ_frame:
                         cv2.putText(frame, 'Blink Detected', (30, 30),
                                     cv2.FONT_HERSHEY_DUPLEX, 1, (0, 200, 0), 1)
-                        blink_detected=True
+                        with blink_lock:
+                            blink_detected = True
                     else:
                         count_frame = 0
 
@@ -86,4 +99,3 @@ def blink():
     cam.release()
     cv2.destroyAllWindows()
 
-blink()
