@@ -59,7 +59,7 @@ const script = path.join(__dirname, 'EyeTracker', 'api.py');
 function checkForBlink() {
    if (stopped) return;
 
-  fetch('http://127.0.0.1:4242/blink')
+  fetch('http://127.0.0.1:8080/blink_detected')
     .then(response => {
       if (!response.ok) {
         throw new Error('HTTP ' + response.status);
@@ -67,7 +67,7 @@ function checkForBlink() {
       return response.json();
     })
     .then(data => {
-      if (data.blink === true) {
+      if (data.blink_detected === true) {
         nextreel();
       }
 

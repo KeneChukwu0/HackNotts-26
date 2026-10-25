@@ -3,9 +3,7 @@ from http.server import HTTPServer, BaseHTTPRequestHandler
 import blink2
 import json
 import threading
-import time
-import sys
-import zerorpc
+
 
 class ApiHandler(BaseHTTPRequestHandler):
     def do_GET(self):
@@ -18,6 +16,7 @@ class ApiHandler(BaseHTTPRequestHandler):
             result = blink2.blink_detect()
 
             response = json.dumps({"blink_detected": result}).encode()
+            print(response)
             blink2.blink_detected = False
             self.send_response(200)
             self.send_header("Content-Type", "application/json")
